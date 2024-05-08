@@ -1,0 +1,40 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+--******************************************************************************
+--*
+--* Name: lab1
+--* Designer: Michaela Crego
+--*
+--*    4 referees, where each referee will vote.
+--*         -HIGH = support
+--*         -LOW = reject
+--*    if there is a tie, the head referee will make the decision.
+--*
+--*
+--*
+--******************************************************************************
+
+entity lab1 is
+    port (
+		   threeRefs : in std_logic_vector(2 downto 0) --this is all three refs, a vector
+		   headRef : in STD_LOGIC --this is just the headRef, a binary
+           finalCall : out STD_LOGIC
+     );
+end lab1;
+
+
+architecture labOne of lab1 is
+begin
+	--with no ties, supported
+	if (threeRefs = "111" or (threeRefs="110" and headRef='1') or (threeRefs="101" and headRef='1') or (threeRefs="011" and headRef='1'))
+		finalCall<='1'; --supported!
+	--with ties below, supported
+	elseif 
+		(threeRefs="001" and headRef='1') or (threeRefs="010" and headRef='1') or (threeRefs="100" and headRef='1')
+		finalCall<='1' --supported!
+	else
+	finalCall<='0'; --refjected 
+	
+end labOne;
+ 

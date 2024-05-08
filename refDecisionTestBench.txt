@@ -1,0 +1,129 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+--******************************************************************************
+--*
+--* Name: lab1_TB
+--* Designer: Michaela Crego
+--*
+--*    4 referees, where each referee will vote.
+--*         -HIGH = support
+--*         -LOW = reject
+--*    if there is a tie, the head referee will make the decision.
+--*
+--*
+--*
+--******************************************************************************
+
+entity lab1_TB is
+end lab1_TB;
+
+architecture labOne of lab1_TB is
+    constant SUPPORT: std_logic := '1'; --made this a 1 to show support (high)!!!!!!!!!
+    
+    --unit-under-test-------------------------------------COMPONENT
+    component lab1 --component declaration
+        port(
+		   headRef : in STD_LOGIC;
+           threeRefs : in std_logic_vector(2 downto 0);
+           finalCall : out STD_LOGIC
+        );
+    end component;
+
+    --uut-signals-------------------------------------------SIGNAL
+    signal headRef : STD_LOGIC; --port pins... use same names...
+    signal threeRefs : std_logic_vector(2 downto 0);
+    signal finalCall : STD_LOGIC;
+
+
+    begin
+    --Unit-Under-Test-------------------------------------------UUT
+        UUT: lab1 port map(
+            headRef  => headRef,
+			threeRefs => threeRefs,
+            finalCall => finalCall
+        );
+
+    -------------------------------------------------------PROCESS
+    --  This process has no sensitivity list.  This means the
+    --  process always executes. VHDL requires any process that
+    --  does not have a sensitivity list to contain at least one
+    --  wait statement.  The statements used in this process
+    --  basically make it unsynthesizable.
+    -------------------------------------------------------------
+    SWITCH_DRIVER: process
+    begin
+		threeRefs <= "000";
+		headRef <='0'
+        wait for 20 ns;
+
+        threeRefs <= "001";
+		headRef <='0'
+        wait for 20 ns;
+
+        threeRefs <= "010";
+		headRef <='0'
+        wait for 20 ns;
+
+        threeRefs <= "011";
+		headRef <='0'
+        wait for 20 ns;
+
+        threeRefs <= "100";
+		headRef <='0'
+        wait for 20 ns;
+
+        threeRefs <= "101";
+		headRef <='0'
+        wait for 20 ns;
+
+        threeRefs <= "110";
+		headRef <='0'
+        wait for 20 ns;
+
+        threeRefs <= "111";
+		headRef <='0'
+		wait for 20ns;
+		
+		threeRefs <= "000";
+		headRef <='1'
+        wait for 20 ns;
+
+        threeRefs <= "001";
+		headRef <='1'
+        wait for 20 ns;
+
+        threeRefs <= "010";
+		headRef <='1'
+        wait for 20 ns;
+
+        threeRefs <= "011";
+		headRef <='1'
+        wait for 20 ns;
+
+        threeRefs <= "100";
+		headRef <='1'
+        wait for 20 ns;
+
+        threeRefs <= "101";
+		headRef <='1'
+        wait for 20 ns;
+
+        threeRefs <= "110";
+		headRef <='1'
+        wait for 20 ns;
+
+        threeRefs <= "111";
+		headRef <='1'
+        wait;  --suspend process forever
+        
+                
+        refOne <= not SUPPORT;
+        refTwo <= not SUPPORT;
+        refThree <= not SUPPORT;
+        headRef <= not SUPPORT;
+        wait;  --suspend process forever
+    end process;
+
+end labOne;
+ 
